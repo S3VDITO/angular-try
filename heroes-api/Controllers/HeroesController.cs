@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using heroes_api.Models;
 using heroes_api.Services;
+using Microsoft.AspNetCore.Cors;
 
 namespace heroes_api.Controllers
 {

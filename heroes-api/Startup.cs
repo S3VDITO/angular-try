@@ -56,6 +56,8 @@ namespace heroes_api
                 var xmlPath = Path.Combine(basePath, "heroes-api.xml");
                 options.IncludeXmlComments(xmlPath);
             });
+
+            services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -67,6 +69,10 @@ namespace heroes_api
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "heroes_api v1"));
             }
+
+            app.UseCors(builder => builder.AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowAnyOrigin());
 
             app.UseRouting();
 
