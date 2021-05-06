@@ -8,11 +8,13 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using heroes_api.Models;
 using heroes_api.Services;
 using Microsoft.Extensions.Options;
+using Microsoft.Extensions.PlatformAbstractions;
 
 namespace heroes_api
 {
@@ -44,6 +46,11 @@ namespace heroes_api
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "heroes_api", Version = "v1" });
+
+                var basePath = PlatformServices.Default.Application.ApplicationBasePath;
+
+                var xmlPath = Path.Combine(basePath, "heroes-api.xml");
+                c.IncludeXmlComments(xmlPath);
             });
         }
 

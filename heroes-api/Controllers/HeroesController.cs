@@ -24,13 +24,6 @@ namespace heroes_api.Controllers
             return Accepted(_heroesService.Get());
         }
 
-        [HttpPost("api/heroes")]
-        public ActionResult<Hero> AddHero(Hero hero)
-        {
-            _heroesService.Create(hero);
-            return Accepted();
-        }
-
         [HttpGet("api/heroes/{id}")]
         public ActionResult<Hero> GetHero(int id)
         {
@@ -41,7 +34,31 @@ namespace heroes_api.Controllers
                 return NotFound();
             }
 
-            return person;
+            return Accepted(person);
+        }
+
+        [HttpPost("api/heroes")]
+        public ActionResult<Hero> AddHero(Hero hero)
+        {
+            return Accepted(_heroesService.Create(hero));
+        }
+
+        /// <summary>
+        /// Пока не имеет реализацию...
+        /// </summary>
+        /// <param name="hero"></param>
+        /// <returns></returns>
+        [HttpPut("api/heroes")]
+        public ActionResult<Hero> UpdateHero(Hero hero)
+        {
+            return Accepted(_heroesService.Update(hero));
+        }
+
+        [HttpDelete("api/heroes/{id}")]
+        public ActionResult<Hero> DeleteHero(int id)
+        {
+            _heroesService.Delete(id);
+            return Accepted();
         }
     }
 }
