@@ -28,7 +28,13 @@
         public Hero Create(Hero hero)
         {
             // TODO: починить костыль и сделать автоинкремент!
-            _heroes.InsertOne(new Hero() { Id = new Random().Next(0, int.MaxValue), Name = hero.Name });
+            hero = new Hero()
+            {
+                Id = new Random().Next(0, int.MaxValue),
+                Name = hero.Name,
+            };
+
+            _heroes.InsertOne(hero);
             return hero;
         }
 
