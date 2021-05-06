@@ -1,11 +1,12 @@
-﻿using heroes_api.Models;
-using MongoDB.Driver;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace heroes_api.Services
+﻿namespace HeroesAPI.Services
 {
+    using System;
+    using System.Collections.Generic;
+
+    using HeroesAPI.Models;
+
+    using MongoDB.Driver;
+
     public class HeroesService
     {
         private readonly IMongoCollection<Hero> _heroes;
@@ -26,13 +27,15 @@ namespace heroes_api.Services
 
         public Hero Create(Hero hero)
         {
-            _heroes.InsertOne(new Hero() { Id = Get().Count + 1, Name = hero.Name });
+            // TODO: починить костыль и сделать автоинкремент!
+            _heroes.InsertOne(new Hero() { Id = new Random().Next(0, int.MaxValue), Name = hero.Name });
             return hero;
         }
 
-        public Hero Update(Hero newHero)
+        public Hero Update(Hero hero)
         {
-            throw new NotImplementedException();
+            _heroes.FindOneAndUpdate(h => h.Id == hero.Id, Builders<Hero>.Update.Set(h => h.Name, hero.Name));
+            return hero;
         }
 
         public Hero Delete(int id)

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31205.134
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "heroes-api", "heroes-api.csproj", "{6FE7A20F-0038-4C5C-8BC2-A2BC8ACB3922}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HeroesAPI", "HeroesAPI.csproj", "{6FE7A20F-0038-4C5C-8BC2-A2BC8ACB3922}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A1A99E24-591C-41AD-8000-AEC51D06579E}"
 	ProjectSection(SolutionItems) = preProject

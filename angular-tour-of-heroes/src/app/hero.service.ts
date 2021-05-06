@@ -23,10 +23,11 @@ export class HeroService {
   };
 
   getHeroes(): Observable<Hero[]> {
-   return this.http.get<Hero[]>(this.heroesUrl)
-    .pipe(
-      tap(_ => this.log('fetched heroes')),
-      catchError(this.handleError<Hero[]>('getHeroes', [])));
+    return this.http.get<Hero[]>(this.heroesUrl, this.httpOptions)
+      .pipe(
+        tap(data => data.forEach(x => this.log(`${x.id} ${x.name}`))),
+        catchError(this.handleError<Hero[]>('getHeroes', []))
+      );
   }
 
   getHero(id: number): Observable<Hero> {

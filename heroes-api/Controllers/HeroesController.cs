@@ -1,14 +1,12 @@
-﻿using System;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
-using System.Linq;
-using heroes_api.Models;
-using heroes_api.Services;
-using Microsoft.AspNetCore.Cors;
-
-namespace heroes_api.Controllers
+﻿namespace HeroesAPI.Controllers
 {
+    using System.Collections.Generic;
+
+    using HeroesAPI.Models;
+    using HeroesAPI.Services;
+
+    using Microsoft.AspNetCore.Mvc;
+
     [ApiController]
     public class HeroesController : ControllerBase
     {
@@ -47,8 +45,8 @@ namespace heroes_api.Controllers
         /// <summary>
         /// Пока не имеет реализацию...
         /// </summary>
-        /// <param name="hero"></param>
-        /// <returns></returns>
+        /// <param name="hero">Обновленный герой.</param>
+        /// <returns>Результат запроса.</returns>
         [HttpPut("api/heroes")]
         public ActionResult<Hero> UpdateHero(Hero hero)
         {

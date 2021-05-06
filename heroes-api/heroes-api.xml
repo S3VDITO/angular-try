@@ -1,15 +1,15 @@
 <?xml version="1.0"?>
 <doc>
     <assembly>
-        <name>heroes-api</name>
+        <name>HeroesAPI</name>
     </assembly>
     <members>
-        <member name="M:heroes_api.Controllers.HeroesController.UpdateHero(heroes_api.Models.Hero)">
+        <member name="M:HeroesAPI.Controllers.HeroesController.UpdateHero(HeroesAPI.Models.Hero)">
             <summary>
             Пока не имеет реализацию...
             </summary>
-            <param name="hero"></param>
-            <returns></returns>
+            <param name="hero">Обновленный герой.</param>
+            <returns>Результат запроса.</returns>
         </member>
     </members>
 </doc>

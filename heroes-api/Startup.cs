@@ -1,23 +1,19 @@
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using heroes_api.Models;
-using heroes_api.Services;
-using Microsoft.Extensions.Options;
-using Microsoft.Extensions.PlatformAbstractions;
-
-namespace heroes_api
+namespace HeroesAPI
 {
+    using System.IO;
+
+    using HeroesAPI.Models;
+    using HeroesAPI.Services;
+
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Hosting;
+    using Microsoft.Extensions.Options;
+    using Microsoft.Extensions.PlatformAbstractions;
+    using Microsoft.OpenApi.Models;
+
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -39,8 +35,7 @@ namespace heroes_api
 
             services.AddSingleton<HeroesService>();
 
-            services.AddControllers()
-                .AddNewtonsoftJson(options => options.UseMemberCasing());
+            services.AddControllers().AddNewtonsoftJson();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
