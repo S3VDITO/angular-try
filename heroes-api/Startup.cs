@@ -46,11 +46,15 @@ namespace heroes_api
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "heroes_api", Version = "v1" });
+            });
 
+            services.AddSwaggerGen();
+
+            services.ConfigureSwaggerGen(options =>
+            {
                 var basePath = PlatformServices.Default.Application.ApplicationBasePath;
-
                 var xmlPath = Path.Combine(basePath, "heroes-api.xml");
-                c.IncludeXmlComments(xmlPath);
+                options.IncludeXmlComments(xmlPath);
             });
         }
 

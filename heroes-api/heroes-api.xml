@@ -6,7 +6,7 @@
     <members>
         <member name="M:heroes_api.Controllers.HeroesController.UpdateHero(heroes_api.Models.Hero)">
             <summary>
-            Не реализован!
+            Пока не имеет реализацию...
             </summary>
             <param name="hero"></param>
             <returns></returns>
