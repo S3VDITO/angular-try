@@ -1,32 +1,34 @@
 ﻿namespace HeroesAPI.Controllers
 {
     using System.Collections.Generic;
+    using System.Threading.Tasks;
 
-    using HeroesAPI.Models;
-    using HeroesAPI.Services;
+    using HeroesAPI.DAL.Interfaces;
+    using HeroesAPI.DAL.Models;
+    using HeroesAPI.SettingsModels;
 
     using Microsoft.AspNetCore.Mvc;
 
     [ApiController]
     public class HeroesController : ControllerBase
     {
-        private readonly HeroesService _heroesService;
+        private readonly IRepository<Hero> _heroRepository;
 
-        public HeroesController(HeroesService heroesService)
+        public HeroesController(IRepository<Hero> heroRepository)
         {
-            _heroesService = heroesService;
+            _heroRepository = heroRepository;
         }
 
         [HttpGet("api/heroes")]
-        public ActionResult<IEnumerable<Hero>> GetHeroes()
+        public async Task<ActionResult<IEnumerable<Hero>>> GetAll()
         {
-            return Accepted(_heroesService.Get());
+            return Accepted(await _heroRepository.GetAll());
         }
 
         [HttpGet("api/heroes/{id}")]
-        public ActionResult<Hero> GetHero(int id)
+        public async Task<ActionResult<Hero>> Get(int id)
         {
-            var heroes = _heroesService.Get(id);
+            var heroes = await _heroRepository.GetById(id);
 
             if (heroes == null)
             {
@@ -37,43 +39,41 @@
         }
 
         [HttpGet("api/heroes/name={name}")]
-        public ActionResult<Hero> GetHero(string name)
+        public async Task<ActionResult<Hero>> Get(string name)
         {
-            return Accepted(_heroesService.Get(name));
+            return Accepted(await _heroRepository.GetBySubName(name));
         }
 
         [HttpPost("api/heroes")]
-        public ActionResult<Hero> AddHero(Hero hero)
+        public async Task<ActionResult<Hero>> Create(Hero hero)
         {
-            return Accepted(_heroesService.Create(hero));
+            return Accepted(await _heroRepository.Create(hero));
         }
 
         [HttpPut("api/heroes")]
-        public ActionResult<Hero> UpdateHero(Hero hero)
+        public async Task<ActionResult<Hero>> Update(Hero hero)
         {
-            var heroes = _heroesService.Get(hero.Id);
+            var heroTemp = await _heroRepository.GetById(hero.Id);
 
-            if (heroes == null)
+            if (heroTemp == null)
             {
                 return NotFound();
             }
 
-            return Accepted(_heroesService.Update(hero));
+            return Accepted(await _heroRepository.Update(hero));
         }
 
         [HttpDelete("api/heroes/{id}")]
-        public ActionResult<Hero> DeleteHero(int id)
+        public async Task<ActionResult<Hero>> DeleteAsync(int id)
         {
-            var heroes = _heroesService.Get(id);
+            var hero = await _heroRepository.GetById(id);
 
-            if (heroes == null)
+            if (hero == null)
             {
                 return NotFound();
             }
 
-            _heroesService.Delete(id);
-
-            return Accepted();
+            return Accepted(await _heroRepository.Delete(id));
         }
     }
 }

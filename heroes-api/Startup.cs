@@ -2,8 +2,11 @@ namespace HeroesAPI
 {
     using System.IO;
 
-    using HeroesAPI.Models;
-    using HeroesAPI.Services;
+    using HeroesAPI.DAL;
+    using HeroesAPI.DAL.Interfaces;
+    using HeroesAPI.DAL.Models;
+    using HeroesAPI.DAL.Repositories;
+    using HeroesAPI.SettingsModels;
 
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
@@ -27,13 +30,14 @@ namespace HeroesAPI
         public void ConfigureServices(IServiceCollection services)
         {
             // requires using Microsoft.Extensions.Options
-            services.Configure<HeroesDatabaseSettings>(
-                Configuration.GetSection(nameof(HeroesDatabaseSettings)));
+            services.Configure<DatabaseSettings>(
+                Configuration.GetSection(nameof(DatabaseSettings)));
 
-            services.AddSingleton<IHeroesDatabaseSettings>(sp =>
-                sp.GetRequiredService<IOptions<HeroesDatabaseSettings>>().Value);
+            services.AddSingleton<IDatabaseSettings>(sp =>
+                sp.GetRequiredService<IOptions<DatabaseSettings>>().Value);
 
-            services.AddSingleton<HeroesService>();
+            services.AddScoped<MongoDbContext>();
+            services.AddScoped<IRepository<Hero>, HeroRepository>();
 
             services.AddControllers().AddNewtonsoftJson();
 

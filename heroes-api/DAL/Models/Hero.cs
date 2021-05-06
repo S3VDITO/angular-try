@@ -1,8 +1,7 @@
-﻿namespace HeroesAPI.Models
+﻿namespace HeroesAPI.DAL.Models
 {
     using MongoDB.Bson;
     using MongoDB.Bson.Serialization.Attributes;
-    using MongoDB.Driver;
 
     public class Hero
     {
