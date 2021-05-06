@@ -5,7 +5,6 @@
 
     public class Hero
     {
-        [BsonId(Order = 4)]
         [BsonRepresentation(BsonType.Int32)]
         [BsonElement("id")]
         public int Id { get; set; }
