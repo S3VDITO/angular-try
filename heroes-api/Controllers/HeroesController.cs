@@ -26,14 +26,20 @@
         [HttpGet("api/heroes/{id}")]
         public ActionResult<Hero> GetHero(int id)
         {
-            var person = _heroesService.Get(id);
+            var heroes = _heroesService.Get(id);
 
-            if (person == null)
+            if (heroes == null)
             {
                 return NotFound();
             }
 
-            return Accepted(person);
+            return Accepted(heroes);
+        }
+
+        [HttpGet("api/heroes/name={name}")]
+        public ActionResult<Hero> GetHero(string name)
+        {
+            return Accepted(_heroesService.Get(name));
         }
 
         [HttpPost("api/heroes")]
@@ -45,13 +51,28 @@
         [HttpPut("api/heroes")]
         public ActionResult<Hero> UpdateHero(Hero hero)
         {
+            var heroes = _heroesService.Get(hero.Id);
+
+            if (heroes == null)
+            {
+                return NotFound();
+            }
+
             return Accepted(_heroesService.Update(hero));
         }
 
         [HttpDelete("api/heroes/{id}")]
         public ActionResult<Hero> DeleteHero(int id)
         {
+            var heroes = _heroesService.Get(id);
+
+            if (heroes == null)
+            {
+                return NotFound();
+            }
+
             _heroesService.Delete(id);
+
             return Accepted();
         }
     }

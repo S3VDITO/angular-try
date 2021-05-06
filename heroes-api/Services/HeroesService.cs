@@ -24,7 +24,10 @@
             _heroesCollection.Find(hero => true).ToEnumerable();
 
         public Hero Get(int id) =>
-            _heroesCollection.Find<Hero>(hero => hero.Id == id).FirstOrDefault();
+            _heroesCollection.Find(hero => hero.Id == id).FirstOrDefault();
+
+        public IEnumerable<Hero> Get(string name) =>
+            _heroesCollection.Find(hero => hero.Name.Contains(name)).ToEnumerable();
 
         public Hero Create(Hero hero)
         {
@@ -51,6 +54,7 @@
         public Hero Update(Hero hero)
         {
             _heroesCollection.FindOneAndUpdate(h => h.Id == hero.Id, Builders<Hero>.Update.Set(h => h.Name, hero.Name));
+
             return hero;
         }
 
@@ -58,6 +62,7 @@
         {
             Hero hero = Get(id);
             _heroesCollection.DeleteOne(item => item.Id == id);
+
             return hero;
         }
     }
