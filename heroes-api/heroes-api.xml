@@ -4,12 +4,5 @@
         <name>HeroesAPI</name>
     </assembly>
     <members>
-        <member name="M:HeroesAPI.Controllers.HeroesController.UpdateHero(HeroesAPI.Models.Hero)">
-            <summary>
-            Пока не имеет реализацию...
-            </summary>
-            <param name="hero">Обновленный герой.</param>
-            <returns>Результат запроса.</returns>
-        </member>
     </members>
 </doc>

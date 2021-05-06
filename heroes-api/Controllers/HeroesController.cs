@@ -42,11 +42,6 @@
             return Accepted(_heroesService.Create(hero));
         }
 
-        /// <summary>
-        /// Пока не имеет реализацию...
-        /// </summary>
-        /// <param name="hero">Обновленный герой.</param>
-        /// <returns>Результат запроса.</returns>
         [HttpPut("api/heroes")]
         public ActionResult<Hero> UpdateHero(Hero hero)
         {
