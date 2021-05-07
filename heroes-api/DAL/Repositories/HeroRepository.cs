@@ -30,7 +30,7 @@
 
         public async Task<IEnumerable<Hero>> GetBySubName(string name)
         {
-            return await _heroesDbContext.Find(x => x.Name == name);
+            return await _heroesDbContext.Find(x => x.Name.Contains(name));
         }
 
         public async Task<Hero> Create(Hero item)

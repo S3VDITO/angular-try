@@ -41,7 +41,8 @@
         [HttpGet("api/heroes/name={name}")]
         public async Task<ActionResult<Hero>> Get(string name)
         {
-            return Accepted(await _heroRepository.GetBySubName(name));
+            var result = await _heroRepository.GetBySubName(name);
+            return Accepted(result);
         }
 
         [HttpPost("api/heroes")]
@@ -60,11 +61,13 @@
                 return NotFound();
             }
 
-            return Accepted(await _heroRepository.Update(hero));
+            await _heroRepository.Update(hero);
+
+            return Accepted();
         }
 
         [HttpDelete("api/heroes/{id}")]
-        public async Task<ActionResult<Hero>> DeleteAsync(int id)
+        public async Task<ActionResult> DeleteAsync(int id)
         {
             var hero = await _heroRepository.GetById(id);
 
@@ -73,7 +76,9 @@
                 return NotFound();
             }
 
-            return Accepted(_heroRepository.Delete(id));
+            await _heroRepository.Delete(id);
+
+            return Accepted();
         }
     }
 }

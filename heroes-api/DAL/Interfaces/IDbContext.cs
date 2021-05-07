@@ -10,7 +10,7 @@
     {
         public Task Create(TEntity entity);
 
-        public Task<IEnumerable<TEntity>> Find(Expression<Func<TEntity, bool>> predicate);
+        public Task<List<TEntity>> Find(Expression<Func<TEntity, bool>> predicate);
 
         public Task Update(TEntity entity);
 

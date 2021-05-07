@@ -25,29 +25,26 @@
 
         public IMongoDatabase Database { get; }
 
-        public async Task Create(TEntity entity)
+        public Task Create(TEntity entity)
         {
-            await Database.GetCollection<TEntity>(_tableName).InsertOneAsync(entity);
+            return Database.GetCollection<TEntity>(_tableName).InsertOneAsync(entity);
         }
 
-        public async Task Delete(int id)
+        public Task Delete(int id)
         {
-            await Database.GetCollection<TEntity>(_tableName).DeleteOneAsync(item => item.Id == id);
+            return Database.GetCollection<TEntity>(_tableName).DeleteOneAsync(item => item.Id == id);
         }
 
-        public async Task<IEnumerable<TEntity>> Find(Expression<Func<TEntity, bool>> predicate)
+        public Task<List<TEntity>> Find(Expression<Func<TEntity, bool>> predicate)
         {
-            var result = await Database.GetCollection<TEntity>(_tableName).FindAsync(predicate);
-            return await result.ToListAsync();
+            return Database.GetCollection<TEntity>(_tableName).Find(predicate).ToListAsync();
         }
 
-        public async Task Update(TEntity entity)
+        public Task Update(TEntity entity)
         {
-            await Database
+            return Database
                 .GetCollection<TEntity>(_tableName)
-                .FindOneAndUpdateAsync(
-                    h => h.Id == entity.Id,
-                    Builders<TEntity>.Update.Set(h => h, entity));
+                .FindOneAndReplaceAsync(x => x.Id == entity.Id, entity);
         }
     }
 }
