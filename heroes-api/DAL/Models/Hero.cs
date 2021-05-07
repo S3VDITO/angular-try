@@ -1,9 +1,10 @@
 ﻿namespace HeroesAPI.DAL.Models
 {
+    using HeroesAPI.DAL.Interfaces;
     using MongoDB.Bson;
     using MongoDB.Bson.Serialization.Attributes;
 
-    public class Hero
+    public class Hero : IEntity
     {
         [BsonId]
         [BsonRepresentation(BsonType.Int32)]

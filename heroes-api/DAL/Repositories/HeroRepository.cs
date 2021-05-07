@@ -12,22 +12,26 @@
 
     public class HeroRepository : IRepository<Hero>
     {
-        private readonly MongoDbContext _dbContext;
-        private readonly string _tableName = "Heroes";
+        private readonly IDbContext<Hero> _heroesDbContext;
 
-        public HeroRepository(MongoDbContext dbContext)
+        public HeroRepository(IDbContext<Hero> dbContext)
         {
-            _dbContext = dbContext;
+            _heroesDbContext = dbContext;
         }
 
-        public async Task<List<Hero>> GetAll() =>
-            await _dbContext.Database.GetCollection<Hero>(_tableName).Find(Builders<Hero>.Filter.Empty).ToListAsync();
+        public async Task<IEnumerable<Hero>> GetAll() =>
+            await _heroesDbContext.Find(x => true);
 
-        public async Task<Hero> GetById(int id) =>
-            await _dbContext.Database.GetCollection<Hero>(_tableName).Find(x => x.Id == id).FirstOrDefaultAsync();
+        public async Task<Hero> GetById(int id)
+        {
+            var result = await _heroesDbContext.Find(x => x.Id == id);
+            return result.FirstOrDefault();
+        }
 
-        public async Task<List<Hero>> GetBySubName(string name) =>
-            await _dbContext.Database.GetCollection<Hero>(_tableName).Find(x => x.Name.Contains(name)).ToListAsync();
+        public async Task<IEnumerable<Hero>> GetBySubName(string name)
+        {
+            return await _heroesDbContext.Find(x => x.Name == name);
+        }
 
         public async Task<Hero> Create(Hero item)
         {
@@ -45,23 +49,20 @@
                 Name = item.Name,
             };
 
-            await _dbContext.Database.GetCollection<Hero>(_tableName).InsertOneAsync(item);
+            await _heroesDbContext.Create(item);
 
             return item;
         }
 
         public async Task<Hero> Update(Hero item)
         {
-            return await _dbContext.Database
-                .GetCollection<Hero>(_tableName)
-                .FindOneAndUpdateAsync(
-                    h => h.Id == item.Id,
-                    Builders<Hero>.Update.Set(h => h.Name, item.Name));
+            await _heroesDbContext.Update(item);
+            return item;
         }
 
-        public async Task<DeleteResult> Delete(int id)
+        public async Task Delete(int id)
         {
-            return await _dbContext.Database.GetCollection<Hero>(_tableName).DeleteOneAsync(item => item.Id == id);
+            await _heroesDbContext.Delete(id);
         }
     }
 }

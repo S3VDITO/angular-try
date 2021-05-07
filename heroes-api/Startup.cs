@@ -33,10 +33,9 @@ namespace HeroesAPI
             services.Configure<DatabaseSettings>(
                 Configuration.GetSection(nameof(DatabaseSettings)));
 
-            services.AddSingleton<IDatabaseSettings>(sp =>
-                sp.GetRequiredService<IOptions<DatabaseSettings>>().Value);
-
-            services.AddScoped<MongoDbContext>();
+            services.AddScoped<IDbContext<Hero>>(sp => new MongoDbContext<Hero>(
+                sp.GetRequiredService<IOptions<DatabaseSettings>>().Value,
+                "Heroes"));
             services.AddScoped<IRepository<Hero>, HeroRepository>();
 
             services.AddControllers().AddNewtonsoftJson();

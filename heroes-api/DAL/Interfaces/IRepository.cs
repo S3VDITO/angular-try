@@ -8,16 +8,16 @@
     public interface IRepository<T>
         where T : class
     {
-        public Task<List<T>> GetAll();
+        public Task<IEnumerable<T>> GetAll();
 
         public Task<T> GetById(int id);
 
-        public Task<List<T>> GetBySubName(string name);
+        public Task<IEnumerable<T>> GetBySubName(string name);
 
         public Task<T> Create(T item);
 
         public Task<T> Update(T item);
 
-        public Task<DeleteResult> Delete(int id);
+        public Task Delete(int id);
     }
 }

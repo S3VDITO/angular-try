@@ -73,7 +73,7 @@
                 return NotFound();
             }
 
-            return Accepted(await _heroRepository.Delete(id));
+            return Accepted(_heroRepository.Delete(id));
         }
     }
 }
