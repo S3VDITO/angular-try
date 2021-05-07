@@ -1,5 +1,6 @@
 ﻿namespace HeroesAPI.Controllers
 {
+    using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
@@ -25,10 +26,10 @@
             return Accepted(await _heroRepository.GetAll());
         }
 
-        [HttpGet("api/heroes/{id}")]
-        public async Task<ActionResult<Hero>> Get(int id)
+        [HttpGet("api/heroes/{guid}")]
+        public async Task<ActionResult<Hero>> Get(Guid guid)
         {
-            var heroes = await _heroRepository.GetById(id);
+            var heroes = await _heroRepository.GetById(guid);
 
             if (heroes == null)
             {
@@ -67,16 +68,16 @@
         }
 
         [HttpDelete("api/heroes/{id}")]
-        public async Task<ActionResult> DeleteAsync(int id)
+        public async Task<ActionResult> DeleteAsync(Guid guid)
         {
-            var hero = await _heroRepository.GetById(id);
+            var hero = await _heroRepository.GetById(guid);
 
             if (hero == null)
             {
                 return NotFound();
             }
 
-            await _heroRepository.Delete(id);
+            await _heroRepository.Delete(guid);
 
             return Accepted();
         }

@@ -14,6 +14,6 @@
 
         public Task Update(TEntity entity);
 
-        public Task Delete(int id);
+        public Task Delete(Guid guid);
     }
 }

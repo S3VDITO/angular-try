@@ -22,9 +22,9 @@
         public async Task<IEnumerable<Hero>> GetAll() =>
             await _heroesDbContext.Find(x => true);
 
-        public async Task<Hero> GetById(int id)
+        public async Task<Hero> GetById(Guid guid)
         {
-            var result = await _heroesDbContext.Find(x => x.Id == id);
+            var result = await _heroesDbContext.Find(x => x.Id == guid);
             return result.FirstOrDefault();
         }
 
@@ -37,15 +37,7 @@
         {
             item = new Hero()
             {
-                Id = GetAll().Result.Aggregate(0, (accum, h) =>
-                {
-                    if (accum < h.Id)
-                    {
-                        return h.Id;
-                    }
-
-                    return accum;
-                }) + 1,
+                Id = Guid.NewGuid(),
                 Name = item.Name,
             };
 
@@ -60,9 +52,9 @@
             return item;
         }
 
-        public async Task Delete(int id)
+        public async Task Delete(Guid guid)
         {
-            await _heroesDbContext.Delete(id);
+            await _heroesDbContext.Delete(guid);
         }
     }
 }

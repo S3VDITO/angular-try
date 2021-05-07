@@ -30,9 +30,9 @@
             return Database.GetCollection<TEntity>(_tableName).InsertOneAsync(entity);
         }
 
-        public Task Delete(int id)
+        public Task Delete(Guid guid)
         {
-            return Database.GetCollection<TEntity>(_tableName).DeleteOneAsync(item => item.Id == id);
+            return Database.GetCollection<TEntity>(_tableName).DeleteOneAsync(item => item.Id == guid);
         }
 
         public Task<List<TEntity>> Find(Expression<Func<TEntity, bool>> predicate)

@@ -1,5 +1,6 @@
 ﻿namespace HeroesAPI.DAL.Interfaces
 {
+    using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
@@ -10,7 +11,7 @@
     {
         public Task<IEnumerable<T>> GetAll();
 
-        public Task<T> GetById(int id);
+        public Task<T> GetById(Guid id);
 
         public Task<IEnumerable<T>> GetBySubName(string name);
 
@@ -18,6 +19,6 @@
 
         public Task<T> Update(T item);
 
-        public Task Delete(int id);
+        public Task Delete(Guid id);
     }
 }
